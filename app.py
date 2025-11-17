@@ -1,8 +1,9 @@
 import streamlit as st 
 import pandas as pd 
-import matplotlib.pyplot as plt
-import plotly as px
-import altair as alt
+# import matplotlib.pyplot as plt
+# import plotly.express as px
+import altair as alt 
+# import kagglehub
 import os
 import re
 
@@ -74,20 +75,21 @@ def main():
         st.metric("No of Deaths", no_of_deaths)
 
     st.subheader("incidents value counts")
-    temp1 = df.incident.value_counts()
+    temp1 = df.incident.value_counts().reset_index()
     st.dataframe(temp1)
     
-    # altair plotting library
-    # bar chart
-    temp1= temp1.nlargest(10,'count')
-    chart1= alt.Chart(temp1).mark_bar().encode(
-        x=alt.X("count:Q", title='Incident Count'),
-        y=alt.Y("Incident:N"),
+    # altair plotting library 
+    # bar chart 
+    # data for bar chart top 10
+    temp1 = temp1.nlargest(10,'count')
+    
+    chart1 = alt.Chart(temp1).mark_bar().encode(
+        x=alt.X('count:Q', title="Incident Count"),
+        y=alt.Y('incident:N'),
     ).properties(height=600)
 
     # display the chart
     st.altair_chart(chart1)
-
 
 
 
