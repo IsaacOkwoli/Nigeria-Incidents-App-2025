@@ -91,6 +91,19 @@ def main():
     # display the chart
     st.altair_chart(chart1)
 
+    # chart on deaths
+    temp2=df.groupby("location")['Number of deaths'].sum().reset_index()
+
+    temp2=temp2.nlargest(10,'Number of deaths').sort_values(by='Number of deaths', ascending=True)
+    # st.dataframe(temp2)
+
+    chart2 = alt.Chart(temp2).mark_bar().encode(
+        x=alt.X('Number of deaths:Q', title="DEATHS Count"),
+        y=alt.Y('location:N'),
+    ).properties(height=600)
+    st.altair_chart(chart2)
+
+
 
 
 
